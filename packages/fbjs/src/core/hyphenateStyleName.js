@@ -31,9 +31,9 @@ const hyphenate = require('hyphenate');
 function hyphenateStyleName(str) {
   const result = hyphenate(str);
 
-  // convert ms- prefix to "-ms-"
+  // convert "ms-" prefix to "-ms-"
   if (result.length > 2 && result[0] === "m" && result[1] === "s" && result[2] === "-") {
-    return "-ms" + result.slice(2);
+    return "-" + result;
   }
 
   return result;
