@@ -12,8 +12,6 @@
 
 const hyphenate = require('hyphenate');
 
-const msPattern = /^ms-/;
-
 /**
  * Hyphenates a camelcased CSS property name, for example:
  *
@@ -24,14 +22,21 @@ const msPattern = /^ms-/;
  *   > hyphenateStyleName('msTransition')
  *   < "-ms-transition"
  *
- * As Modernizr suggests (http://modernizr.com/docs/#prefixed), an `ms` prefix
+ * As Modernizr suggests (http://modernizr.com/docs/#prefixed), an `ms-` prefix
  * is converted to `-ms-`.
  *
  * @param {string} string
  * @return {string}
  */
-function hyphenateStyleName(string) {
-  return hyphenate(string).replace(msPattern, '-ms-');
+function hyphenateStyleName(str) {
+  const result = hyphenate(str);
+
+  // convert ms- prefix to "-ms-"
+  if (result.length > 2 && result[0] === "m" && result[1] === "s" && result[2] === "-") {
+    return "-ms" + result.slice(2);
+  }
+
+  return result;
 }
 
 module.exports = hyphenateStyleName;

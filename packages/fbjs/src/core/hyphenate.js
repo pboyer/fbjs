@@ -8,8 +8,6 @@
  * @typechecks
  */
 
-const _uppercasePattern = /([A-Z])/g;
-
 /**
  * Hyphenates a camelcased string, for example:
  *
@@ -22,8 +20,21 @@ const _uppercasePattern = /([A-Z])/g;
  * @param {string} string
  * @return {string}
  */
-function hyphenate(string) {
-  return string.replace(_uppercasePattern, '-$1').toLowerCase();
+function hyphenate(str) {
+  let result = "";
+
+  // convert every uppercase letter to lower and prefix with a dash
+  for (let i = 0, l = str.length; i < l; i++) {
+    const cc = str.charCodeAt(i);
+    if (cc > 64 && cc < 91) {
+      result += "-";
+      result += String.fromCharCode(cc + 32); // convert charcode to uppercase
+    } else {
+      result += str[i];
+    }
+  }
+
+  return result;
 }
 
 module.exports = hyphenate;
